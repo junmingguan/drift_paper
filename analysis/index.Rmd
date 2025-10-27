@@ -8,4 +8,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+Analysis results in the drift paper.
+
+- Reproducing Joon's [Figure 7](figure7.html).
