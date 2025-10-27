@@ -1,0 +1,383 @@
+---
+title: "figure7"
+author: "junmingguan"
+date: "2025-10-26"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r}
+
+library(here)
+library(tidyverse)
+library(genio)
+library(ape)
+library(gridExtra)
+library(pheatmap)
+library(fastTopics)
+source(here('code/utils.R'))
+source(here('code/treemix-1.13/src/plotting_funcs.R'))
+```
+
+
+## Data
+
+- Genotype files in plink format: `/project2/mstephens/junmingguan/1000G/tgp_admixture_data_matched_to_AA.[bed/bim/fam]`
+  - SNPs have been matched to ancestral alleles
+- Admixture has been applied to the genotype file with output in `/project2/mstephens/junmingguan/1000G/tgp_admixture_data_matched_to_AA.8.p`
+  - Command used: `/project2/mstephens/junmingguan/1000G/dist/admixture_linux-1.3.0/admixture tgp_admixture_data_matched_to_AA.bed 8 -j6`
+
+
+```{r}
+library(dplyr)
+
+# extract meta data from kgp package
+tgp_meta <- kgp::kgp3
+tgp_meta <- tgp_meta %>%
+  select(sample = id, gender = sexf, pop = pop, super_pop = reg)
+
+tgp_meta$pop <- factor(tgp_meta$pop, levels=c("GWD","MSL","YRI","ESN","LWK",
+                                                "ACB","ASW",
+                                                "TSI","IBS","GBR","CEU","FIN","PJL","GIH",
+                                                "ITU","STU","BEB",
+                                                "CDX","KHV","CHS","CHB","JPT",
+                                                "PUR","CLM","MXL","PEL"))
+
+# reorder to match the ordering of samples in 1000 Genomes Project data
+tgp_fam_data_id <- genio::read_fam('../1000G/tgp_admixture_data_matched_to_AA.fam')$id
+
+tgp_meta <- tgp_meta %>%
+  arrange(match(sample, tgp_fam_data_id))
+
+
+pop <- tgp_meta$pop
+
+```
+
+
+## Obtaining genotype data
+```{r}
+
+tgp_data <- genio::read_plink('../1000G/tgp_admixture_data_matched_to_AA')
+G <- tgp_data$X
+```
+
+
+## import Admixture results (P,Q)
+
+```{r}
+loc <- '../1000G/'
+filename <- 'tgp_admixture_data_matched_to_AA.'
+```
+
+
+```{r}
+prep.PQ <- function(K){
+  
+  # load ADMIXTURE fit
+  Q <- read_table(paste0(loc,filename,K,'.Q'), 
+                  col_names = FALSE, show_col_types = FALSE)
+  Q <- as.matrix(Q)
+  print(dim(Q))
+  
+  P <- read_table(paste0(loc,filename,K,'.P'), 
+                  col_names = FALSE, show_col_types = FALSE)
+  P <- as.matrix(P)
+  print(dim(P))
+
+
+
+  # order factors
+  data.frame(pop = pop,
+             Q) %>%
+    pivot_longer(cols=2:(ncol(Q)+1)) %>%
+    group_by(pop, name) %>%
+    summarize(mean = mean(value)) %>%
+    group_by(name) %>%
+    arrange(name) %>%
+    filter(mean == max(mean)) %>%
+    ungroup() %>%
+    arrange(pop) -> df.cols
+  
+  Q <- Q[, df.cols$name]
+  P <- P[, df.cols$name]
+  
+  rownames(Q) <- pop
+  colnames(Q) <- paste0("P", 1:ncol(Q))
+  colnames(P) <- colnames(Q)
+  
+  
+  # change P coding
+  
+  # 1. P <- 1-P to represent minor allele frequency (consistent with G)
+  #G0 <- data$X
+  #plot(P[1:100,1], rowMeans(G0[1:100, pop=='GWD'])/2)
+  #rm(G0)
+  P <- 1-P
+
+  # 2. flip if ancestral allele is different from original coding
+#   P[idx.flip,] <- 1-P[idx.flip,]
+  
+  # 3. delete alleles without ancestral information
+#   P <- P[!idx.na,]
+  
+  out.list <- list(P=P, Q=Q)
+  
+  return(out.list)
+}
+
+
+################################################################################
+# functions for preparing data  
+################################################################################
+
+# G (S x N): genotype data
+# P (S x K): population allele frequencies
+# Q (N x K): individuals' population memberships
+# X (S x K): minor allele counts
+prep_GPQX <- function(G, P, Q){
+  
+  popsize <- round(colSums(Q)) # effective population size
+  X <- round(P %*% diag(2*popsize))
+  colnames(X) <- colnames(P)
+  
+  out.list <- list(G=G, P=P, Q=Q, X=X, popsize=popsize)
+  return(out.list)
+}
+
+
+treemix_output_to_L <- function(out_treemix){
+  
+  out <- out_treemix
+  
+  V <- data.frame(
+    id = out$d[,1],
+    label = ifelse(is.na(out$d[,2]), out$d[,3], out$d[,2])
+  )
+  V[V[,2]=='NOT_ROOT',2] <- ''
+  
+  E <- data.frame(
+    from = out$e[,1],
+    to = out$e[,2],
+    driftsize = out$e[,3],
+    weight = out$e[,4]
+  )
+  
+  
+  L <- matrix(0, nrow=nrow(V), ncol = nrow(E))
+  rownames(L) <- V$label
+  
+  v_idx_Outgroup <- which(V[,2]=='Outgroup')
+  
+  # change (from=ROOT, to=Outgroup) --> (from=Outgroup, to=ROOT)
+  e_idx <- which(E$to==V$id[v_idx_Outgroup])
+  if ((V$id[which(V[,2]=='ROOT')]) != E[e_idx, 'from']){
+    warning('ROOT is not directly connected to Outgroup' )
+    return(NULL)
+  }
+ 
+  E[e_idx, 'to'] <- E[e_idx, 'from']
+  E[e_idx, 'from'] <- V$id[v_idx_Outgroup]
+  
+  queue <- which(E$from == V$id[v_idx_Outgroup]) # queue is for edges
+  processed <- c()
+  
+  while(length(queue)>0){
+    e <- queue[1]
+    queue <- queue[-1]
+    
+    from_id <- E[e, 'from']
+    to_id <- E[e, 'to']
+    driftsize <- E[e, 'driftsize']
+    weight <- E[e, 'weight']
+    
+    L[which(V$id==to_id),] <- L[which(V$id==to_id),] + L[which(V$id==from_id),] * weight
+    L[which(V$id==to_id), e] <- L[which(V$id==to_id), e] + driftsize * weight
+    
+    processed <- c(processed, e)
+    if (all(which(E$to==to_id) %in% processed)){
+      queue <- c(queue, which(E$from==to_id))
+    }
+  }
+  
+  L <- L[,processed] # reorder drifts, using the processed order
+  E <- E[processed,]
+  # combine the (Outrgoup --> Root) and (Root --> mu0) branches
+  L[,2] <- L[,1] + L[,2]
+  L <- L[,-1]
+  
+  L <- L[rownames(L)!="" & rownames(L)!="Outgroup" & rownames(L)!="ROOT" ,]
+  L <- L[order(rownames(L)),]
+  L <- L[,apply(L, 2, max)>0]
+  colnames(L) <- paste0("D",0:(ncol(L)-1))
+  
+  L <- sqrt(L) # convert drift sizes into drift memberships
+  
+  return(L)
+}
+
+estimate_L_from_X_treemix <- function(X, popsize, include.outgroup=TRUE,
+                                      m1=TRUE, m2=TRUE){
+  
+  # prepare temporary treemix input file
+  treemix_input <- c()
+  for (k in 1:ncol(X)){
+    
+    ra <- 2*popsize[k] - X[,k]# reference (ancestral) allele count
+    ma <- X[,k] # minor (derived) allele count
+    treemix_input <- cbind(treemix_input,
+                           c(colnames(X)[k], paste(ra, ',', ma, sep='')))
+  }
+  
+  if(include.outgroup==TRUE){
+    ra <- rep(2, nrow(X))
+    ma <- rep(0, nrow(X))
+    treemix_input <- cbind(treemix_input,
+                           c(paste0('Outgroup'), paste(ra, ',', ma, sep='')))
+  }
+  
+  write.table(treemix_input, paste('output', 'treemix_results', 'temp_treemix_input', sep='/'),
+              row.names=FALSE, col.names=FALSE, quote=FALSE)
+  R.utils::gzip(paste('output', 'treemix_results', 'temp_treemix_input', sep='/'), overwrite=TRUE)
+  
+  
+  # run treemix for m=0,1,2
+  if(include.outgroup==TRUE){
+    rooting <- '-root Outgroup'
+  }else{
+    rooting <- ''
+    stop('This function is not yet implemented')
+  }
+
+
+
+#   paste0("cd '/Users/jkang/Library/CloudStorage/Box-Box/research/drift/output/treemix';", 
+  paste0('module load gsl;',
+    'treemix -i output/treemix_results/temp_treemix_input.gz -seed 1 ', rooting, ' -o output/treemix_results/temp_treemix_m0') %>%
+    system(ignore.stdout=TRUE, wait=TRUE)
+  # use 'plotting_funcs.R' of treemix package to import results
+  out_m0 <- plot_tree('output/treemix_results/temp_treemix_m0')
+  L_m0 <- treemix_output_to_L(out_m0)
+  
+  
+  
+  if(m1==TRUE){
+    # paste0("cd '/Users/jkang/Library/CloudStorage/Box-Box/research/drift/output/treemix';", 
+    paste0('module load gsl;',
+      'treemix -i output/treemix_results/temp_treemix_input.gz -seed 1 ', rooting, ' -m 1 -o output/treemix_results/temp_treemix_m1') %>%
+      system(ignore.stdout=TRUE, wait=TRUE)
+    
+    out_m1 <- plot_tree('output/treemix_results/temp_treemix_m1')
+    L_m1 <- treemix_output_to_L(out_m1)
+  }else{
+    L_m1 <- NULL
+  }
+  if(m2==TRUE){
+    # paste0("cd '/Users/jkang/Library/CloudStorage/Box-Box/research/drift/output/treemix';", 
+    paste0('module load gsl;',
+    'treemix -i output/treemix_results/temp_treemix_input.gz -seed 1 ', rooting, ' -m 2 -o output/treemix_results/temp_treemix_m2') %>%
+      system(ignore.stdout=TRUE, wait=TRUE)
+
+  
+    out_m2 <- plot_tree('output/treemix_results/temp_treemix_m2')
+    L_m2 <- treemix_output_to_L(out_m2)
+  }else{
+    L_m2 <- NULL
+  }
+  
+  R.utils::gunzip(paste('output', 'treemix_results', 'temp_treemix_m0.treeout.gz', sep='/'),
+                  overwrite=TRUE, remove=FALSE)
+  tree <- read.tree(paste('output', 'treemix_results', 'temp_treemix_m0.treeout', sep='/'))
+  tree_wo_Outgroup <- drop.tip(tree, 'Outgroup')
+  
+  
+  out.list <- list(L_m0 = L_m0, L_m1 = L_m1, L_m2 = L_m2, 
+                   tree = tree, tree_wo_Outgroup = tree_wo_Outgroup)
+  
+  return(out.list)
+}
+
+
+compute_P_from_X <- function(X, popsize){
+  
+  P <- matrix(0, nrow=nrow(X), ncol=ncol(X))
+  for (k in 1:ncol(X)){
+    P[,k] <- X[,k]/(2*popsize[k])
+  }
+  colnames(P) <- colnames(X)
+  return(P)
+}
+
+
+```
+
+
+```{r}
+# Admixture result with K=8 populations
+out.PQ <- prep.PQ(8)
+```
+
+```{r}
+gpqx <- prep_GPQX(G = G, P = out.PQ$P, Q = out.PQ$Q)
+loadings_order <- set_loadings_order((gpqx$Q)[,-1])
+```
+
+```{r}
+dataname <- '1kgp'
+```
+
+```{r}
+plot_Q(gpqx$Q, pop, loadings_order = loadings_order)
+# ggsave('output/Q.pdf', width=7, height=3)
+ggsave(here('output', 'fig', 'fig7', paste0(dataname, '_Q.pdf')), width=7, height=3)
+```
+
+
+## tree estimation
+
+```{r}
+out_treemix <- estimate_L_from_X_treemix(gpqx$X, gpqx$popsize, 
+                                         m1=FALSE, m2=FALSE)
+L.ref <- out_treemix$L_m0[,-1] 
+```
+
+```{r}
+plot_T(out_treemix, edgelabels_adj = 0.5)
+pdf(file=here('output', 'fig', 'fig7', paste0(dataname, '_T.pdf')), # 'output/T.pdf', 
+    width=8, height=5)
+plot_T(out_treemix, edgelabels_adj = 0.5)
+dev.off()
+```
+
+
+
+
+## L, M, M2 plots
+
+```{r}
+figL.tree <- plot_L(L.ref, legend = FALSE)
+
+
+figM.tree <- plot_M(M = gpqx$Q %*% L.ref, 
+                    pop=pop, loadings_order = loadings_order, legend = FALSE)
+
+
+figM2.tree <- plot_M2(L = L.ref,
+                      M = gpqx$Q %*% L.ref,
+                      P = compute_P_from_X(gpqx$X, gpqx$popsize),
+                      G = gpqx$G,
+                      pop = pop,
+                      loadings_order = loadings_order,
+                      legend = TRUE)
+
+
+fig.tree <- grid.arrange(figL.tree, figM.tree, figM2.tree, nrow=1, widths=c(1,2,2.3))
+fig.tree
+ggsave(here('output/fig', 'fig7', paste0(dataname, '_LMM2_tree.pdf')),
+       fig.tree, 
+       width=12, height=3)
+  
+```
+
