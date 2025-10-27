@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="junmingguan" />
+
+<meta name="date" content="2025-10-26" />
+
+<title>figure7</title>
+
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-6.5.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">drift_paper</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/junmingguan/drift_paper">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">figure7</h1>
+<h4 class="author">junmingguan</h4>
+<h4 class="date">2025-10-26</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2025-10-26
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>drift_paper/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20251026code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20251026)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20251026code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20251026)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjunmingguandriftpapertreea0cbc3ac69444f0b8d54ac90c5fd9f6e40c373f1targetblanka0cbc3aa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/junmingguan/drift_paper/tree/a0cbc3ac69444f0b8d54ac90c5fd9f6e40c373f1" target="_blank">a0cbc3a</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomjunmingguandriftpapertreea0cbc3ac69444f0b8d54ac90c5fd9f6e40c373f1targetblanka0cbc3aa"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/junmingguan/drift_paper/tree/a0cbc3ac69444f0b8d54ac90c5fd9f6e40c373f1" target="_blank">a0cbc3a</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  Rplots.pdf
+    Untracked:  code/treemix-1.13/
+    Untracked:  code/utils.R
+    Untracked:  output/fig/
+    Untracked:  output/treemix_results/
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/figure7.Rmd</code>) and HTML
+(<code>docs/figure7.html</code>) files. If you’ve configured a remote
+Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/junmingguan/drift_paper/blob/a0cbc3ac69444f0b8d54ac90c5fd9f6e40c373f1/analysis/figure7.Rmd" target="_blank">a0cbc3a</a>
+</td>
+<td>
+junmingguan
+</td>
+<td>
+2025-10-26
+</td>
+<td>
+wflow_git_commit("analysis/figure7.Rmd")
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(here)</code></pre>
+<pre><code>here() starts at /project2/mstephens/junmingguan/drift_paper</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     </code></pre>
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(genio)
+library(ape)</code></pre>
+<pre><code>
+Attaching package: &#39;ape&#39;
+
+The following object is masked from &#39;package:dplyr&#39;:
+
+    where</code></pre>
+<pre class="r"><code>library(gridExtra)</code></pre>
+<pre><code>
+Attaching package: &#39;gridExtra&#39;
+
+The following object is masked from &#39;package:dplyr&#39;:
+
+    combine</code></pre>
+<pre class="r"><code>library(pheatmap)
+library(fastTopics)
+source(here(&#39;code/utils.R&#39;))
+source(here(&#39;code/treemix-1.13/src/plotting_funcs.R&#39;))</code></pre>
+<div id="data" class="section level2">
+<h2>Data</h2>
+<ul>
+<li>Genotype files in plink format:
+<code>/project2/mstephens/junmingguan/1000G/tgp_admixture_data_matched_to_AA.[bed/bim/fam]</code>
+<ul>
+<li>SNPs have been matched to ancestral alleles</li>
+</ul></li>
+<li>Admixture has been applied to the genotype file with output in
+<code>/project2/mstephens/junmingguan/1000G/tgp_admixture_data_matched_to_AA.8.p</code>
+<ul>
+<li>Command used:
+<code>/project2/mstephens/junmingguan/1000G/dist/admixture_linux-1.3.0/admixture tgp_admixture_data_matched_to_AA.bed 8 -j6</code></li>
+</ul></li>
+</ul>
+<pre class="r"><code>library(dplyr)
+
+# extract meta data from kgp package
+tgp_meta &lt;- kgp::kgp3
+tgp_meta &lt;- tgp_meta %&gt;%
+  select(sample = id, gender = sexf, pop = pop, super_pop = reg)
+
+tgp_meta$pop &lt;- factor(tgp_meta$pop, levels=c(&quot;GWD&quot;,&quot;MSL&quot;,&quot;YRI&quot;,&quot;ESN&quot;,&quot;LWK&quot;,
+                                                &quot;ACB&quot;,&quot;ASW&quot;,
+                                                &quot;TSI&quot;,&quot;IBS&quot;,&quot;GBR&quot;,&quot;CEU&quot;,&quot;FIN&quot;,&quot;PJL&quot;,&quot;GIH&quot;,
+                                                &quot;ITU&quot;,&quot;STU&quot;,&quot;BEB&quot;,
+                                                &quot;CDX&quot;,&quot;KHV&quot;,&quot;CHS&quot;,&quot;CHB&quot;,&quot;JPT&quot;,
+                                                &quot;PUR&quot;,&quot;CLM&quot;,&quot;MXL&quot;,&quot;PEL&quot;))
+
+# reorder to match the ordering of samples in 1000 Genomes Project data
+tgp_fam_data_id &lt;- genio::read_fam(&#39;../1000G/tgp_admixture_data_matched_to_AA.fam&#39;)$id</code></pre>
+<pre><code>Reading: ../1000G/tgp_admixture_data_matched_to_AA.fam</code></pre>
+<pre class="r"><code>tgp_meta &lt;- tgp_meta %&gt;%
+  arrange(match(sample, tgp_fam_data_id))
+
+
+pop &lt;- tgp_meta$pop</code></pre>
+</div>
+<div id="obtaining-genotype-data" class="section level2">
+<h2>Obtaining genotype data</h2>
+<pre class="r"><code>tgp_data &lt;- genio::read_plink(&#39;../1000G/tgp_admixture_data_matched_to_AA&#39;)</code></pre>
+<pre><code>Reading: ../1000G/tgp_admixture_data_matched_to_AA.bim</code></pre>
+<pre><code>Reading: ../1000G/tgp_admixture_data_matched_to_AA.fam</code></pre>
+<pre><code>Reading: ../1000G/tgp_admixture_data_matched_to_AA.bed</code></pre>
+<pre class="r"><code>G &lt;- tgp_data$X</code></pre>
+</div>
+<div id="import-admixture-results-pq" class="section level2">
+<h2>import Admixture results (P,Q)</h2>
+<pre class="r"><code>loc &lt;- &#39;../1000G/&#39;
+filename &lt;- &#39;tgp_admixture_data_matched_to_AA.&#39;</code></pre>
+<pre class="r"><code>prep.PQ &lt;- function(K){
+  
+  # load ADMIXTURE fit
+  Q &lt;- read_table(paste0(loc,filename,K,&#39;.Q&#39;), 
+                  col_names = FALSE, show_col_types = FALSE)
+  Q &lt;- as.matrix(Q)
+  print(dim(Q))
+  
+  P &lt;- read_table(paste0(loc,filename,K,&#39;.P&#39;), 
+                  col_names = FALSE, show_col_types = FALSE)
+  P &lt;- as.matrix(P)
+  print(dim(P))
+
+
+
+  # order factors
+  data.frame(pop = pop,
+             Q) %&gt;%
+    pivot_longer(cols=2:(ncol(Q)+1)) %&gt;%
+    group_by(pop, name) %&gt;%
+    summarize(mean = mean(value)) %&gt;%
+    group_by(name) %&gt;%
+    arrange(name) %&gt;%
+    filter(mean == max(mean)) %&gt;%
+    ungroup() %&gt;%
+    arrange(pop) -&gt; df.cols
+  
+  Q &lt;- Q[, df.cols$name]
+  P &lt;- P[, df.cols$name]
+  
+  rownames(Q) &lt;- pop
+  colnames(Q) &lt;- paste0(&quot;P&quot;, 1:ncol(Q))
+  colnames(P) &lt;- colnames(Q)
+  
+  
+  # change P coding
+  
+  # 1. P &lt;- 1-P to represent minor allele frequency (consistent with G)
+  #G0 &lt;- data$X
+  #plot(P[1:100,1], rowMeans(G0[1:100, pop==&#39;GWD&#39;])/2)
+  #rm(G0)
+  P &lt;- 1-P
+
+  # 2. flip if ancestral allele is different from original coding
+#   P[idx.flip,] &lt;- 1-P[idx.flip,]
+  
+  # 3. delete alleles without ancestral information
+#   P &lt;- P[!idx.na,]
+  
+  out.list &lt;- list(P=P, Q=Q)
+  
+  return(out.list)
+}
+
+
+################################################################################
+# functions for preparing data  
+################################################################################
+
+# G (S x N): genotype data
+# P (S x K): population allele frequencies
+# Q (N x K): individuals&#39; population memberships
+# X (S x K): minor allele counts
+prep_GPQX &lt;- function(G, P, Q){
+  
+  popsize &lt;- round(colSums(Q)) # effective population size
+  X &lt;- round(P %*% diag(2*popsize))
+  colnames(X) &lt;- colnames(P)
+  
+  out.list &lt;- list(G=G, P=P, Q=Q, X=X, popsize=popsize)
+  return(out.list)
+}
+
+
+treemix_output_to_L &lt;- function(out_treemix){
+  
+  out &lt;- out_treemix
+  
+  V &lt;- data.frame(
+    id = out$d[,1],
+    label = ifelse(is.na(out$d[,2]), out$d[,3], out$d[,2])
+  )
+  V[V[,2]==&#39;NOT_ROOT&#39;,2] &lt;- &#39;&#39;
+  
+  E &lt;- data.frame(
+    from = out$e[,1],
+    to = out$e[,2],
+    driftsize = out$e[,3],
+    weight = out$e[,4]
+  )
+  
+  
+  L &lt;- matrix(0, nrow=nrow(V), ncol = nrow(E))
+  rownames(L) &lt;- V$label
+  
+  v_idx_Outgroup &lt;- which(V[,2]==&#39;Outgroup&#39;)
+  
+  # change (from=ROOT, to=Outgroup) --&gt; (from=Outgroup, to=ROOT)
+  e_idx &lt;- which(E$to==V$id[v_idx_Outgroup])
+  if ((V$id[which(V[,2]==&#39;ROOT&#39;)]) != E[e_idx, &#39;from&#39;]){
+    warning(&#39;ROOT is not directly connected to Outgroup&#39; )
+    return(NULL)
+  }
+ 
+  E[e_idx, &#39;to&#39;] &lt;- E[e_idx, &#39;from&#39;]
+  E[e_idx, &#39;from&#39;] &lt;- V$id[v_idx_Outgroup]
+  
+  queue &lt;- which(E$from == V$id[v_idx_Outgroup]) # queue is for edges
+  processed &lt;- c()
+  
+  while(length(queue)&gt;0){
+    e &lt;- queue[1]
+    queue &lt;- queue[-1]
+    
+    from_id &lt;- E[e, &#39;from&#39;]
+    to_id &lt;- E[e, &#39;to&#39;]
+    driftsize &lt;- E[e, &#39;driftsize&#39;]
+    weight &lt;- E[e, &#39;weight&#39;]
+    
+    L[which(V$id==to_id),] &lt;- L[which(V$id==to_id),] + L[which(V$id==from_id),] * weight
+    L[which(V$id==to_id), e] &lt;- L[which(V$id==to_id), e] + driftsize * weight
+    
+    processed &lt;- c(processed, e)
+    if (all(which(E$to==to_id) %in% processed)){
+      queue &lt;- c(queue, which(E$from==to_id))
+    }
+  }
+  
+  L &lt;- L[,processed] # reorder drifts, using the processed order
+  E &lt;- E[processed,]
+  # combine the (Outrgoup --&gt; Root) and (Root --&gt; mu0) branches
+  L[,2] &lt;- L[,1] + L[,2]
+  L &lt;- L[,-1]
+  
+  L &lt;- L[rownames(L)!=&quot;&quot; &amp; rownames(L)!=&quot;Outgroup&quot; &amp; rownames(L)!=&quot;ROOT&quot; ,]
+  L &lt;- L[order(rownames(L)),]
+  L &lt;- L[,apply(L, 2, max)&gt;0]
+  colnames(L) &lt;- paste0(&quot;D&quot;,0:(ncol(L)-1))
+  
+  L &lt;- sqrt(L) # convert drift sizes into drift memberships
+  
+  return(L)
+}
+
+estimate_L_from_X_treemix &lt;- function(X, popsize, include.outgroup=TRUE,
+                                      m1=TRUE, m2=TRUE){
+  
+  # prepare temporary treemix input file
+  treemix_input &lt;- c()
+  for (k in 1:ncol(X)){
+    
+    ra &lt;- 2*popsize[k] - X[,k]# reference (ancestral) allele count
+    ma &lt;- X[,k] # minor (derived) allele count
+    treemix_input &lt;- cbind(treemix_input,
+                           c(colnames(X)[k], paste(ra, &#39;,&#39;, ma, sep=&#39;&#39;)))
+  }
+  
+  if(include.outgroup==TRUE){
+    ra &lt;- rep(2, nrow(X))
+    ma &lt;- rep(0, nrow(X))
+    treemix_input &lt;- cbind(treemix_input,
+                           c(paste0(&#39;Outgroup&#39;), paste(ra, &#39;,&#39;, ma, sep=&#39;&#39;)))
+  }
+  
+  write.table(treemix_input, paste(&#39;output&#39;, &#39;treemix_results&#39;, &#39;temp_treemix_input&#39;, sep=&#39;/&#39;),
+              row.names=FALSE, col.names=FALSE, quote=FALSE)
+  R.utils::gzip(paste(&#39;output&#39;, &#39;treemix_results&#39;, &#39;temp_treemix_input&#39;, sep=&#39;/&#39;), overwrite=TRUE)
+  
+  
+  # run treemix for m=0,1,2
+  if(include.outgroup==TRUE){
+    rooting &lt;- &#39;-root Outgroup&#39;
+  }else{
+    rooting &lt;- &#39;&#39;
+    stop(&#39;This function is not yet implemented&#39;)
+  }
+
+
+
+#   paste0(&quot;cd &#39;/Users/jkang/Library/CloudStorage/Box-Box/research/drift/output/treemix&#39;;&quot;, 
+  paste0(&#39;module load gsl;&#39;,
+    &#39;treemix -i output/treemix_results/temp_treemix_input.gz -seed 1 &#39;, rooting, &#39; -o output/treemix_results/temp_treemix_m0&#39;) %&gt;%
+    system(ignore.stdout=TRUE, wait=TRUE)
+  # use &#39;plotting_funcs.R&#39; of treemix package to import results
+  out_m0 &lt;- plot_tree(&#39;output/treemix_results/temp_treemix_m0&#39;)
+  L_m0 &lt;- treemix_output_to_L(out_m0)
+  
+  
+  
+  if(m1==TRUE){
+    # paste0(&quot;cd &#39;/Users/jkang/Library/CloudStorage/Box-Box/research/drift/output/treemix&#39;;&quot;, 
+    paste0(&#39;module load gsl;&#39;,
+      &#39;treemix -i output/treemix_results/temp_treemix_input.gz -seed 1 &#39;, rooting, &#39; -m 1 -o output/treemix_results/temp_treemix_m1&#39;) %&gt;%
+      system(ignore.stdout=TRUE, wait=TRUE)
+    
+    out_m1 &lt;- plot_tree(&#39;output/treemix_results/temp_treemix_m1&#39;)
+    L_m1 &lt;- treemix_output_to_L(out_m1)
+  }else{
+    L_m1 &lt;- NULL
+  }
+  if(m2==TRUE){
+    # paste0(&quot;cd &#39;/Users/jkang/Library/CloudStorage/Box-Box/research/drift/output/treemix&#39;;&quot;, 
+    paste0(&#39;module load gsl;&#39;,
+    &#39;treemix -i output/treemix_results/temp_treemix_input.gz -seed 1 &#39;, rooting, &#39; -m 2 -o output/treemix_results/temp_treemix_m2&#39;) %&gt;%
+      system(ignore.stdout=TRUE, wait=TRUE)
+
+  
+    out_m2 &lt;- plot_tree(&#39;output/treemix_results/temp_treemix_m2&#39;)
+    L_m2 &lt;- treemix_output_to_L(out_m2)
+  }else{
+    L_m2 &lt;- NULL
+  }
+  
+  R.utils::gunzip(paste(&#39;output&#39;, &#39;treemix_results&#39;, &#39;temp_treemix_m0.treeout.gz&#39;, sep=&#39;/&#39;),
+                  overwrite=TRUE, remove=FALSE)
+  tree &lt;- read.tree(paste(&#39;output&#39;, &#39;treemix_results&#39;, &#39;temp_treemix_m0.treeout&#39;, sep=&#39;/&#39;))
+  tree_wo_Outgroup &lt;- drop.tip(tree, &#39;Outgroup&#39;)
+  
+  
+  out.list &lt;- list(L_m0 = L_m0, L_m1 = L_m1, L_m2 = L_m2, 
+                   tree = tree, tree_wo_Outgroup = tree_wo_Outgroup)
+  
+  return(out.list)
+}
+
+
+compute_P_from_X &lt;- function(X, popsize){
+  
+  P &lt;- matrix(0, nrow=nrow(X), ncol=ncol(X))
+  for (k in 1:ncol(X)){
+    P[,k] &lt;- X[,k]/(2*popsize[k])
+  }
+  colnames(P) &lt;- colnames(X)
+  return(P)
+}</code></pre>
+<pre class="r"><code># Admixture result with K=8 populations
+out.PQ &lt;- prep.PQ(8)</code></pre>
+<pre><code>[1] 2504    8
+[1] 185116      8</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;pop&#39;. You can override using the `.groups`
+argument.</code></pre>
+<pre class="r"><code>gpqx &lt;- prep_GPQX(G = G, P = out.PQ$P, Q = out.PQ$Q)
+loadings_order &lt;- set_loadings_order((gpqx$Q)[,-1])</code></pre>
+<pre><code>19:20:31 UMAP embedding parameters a = 1.896 b = 0.8006</code></pre>
+<pre><code>19:20:31 Read 2504 rows and found 7 numeric columns</code></pre>
+<pre><code>19:20:31 Using FNN for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>19:20:31 Commencing smooth kNN distance calibration using 32 threads with target n_neighbors = 30
+19:20:31 67 smooth knn distance failures
+19:20:31 Found 5 connected components, falling back to &#39;spca&#39; initialization with init_sdev = 1
+19:20:31 Using &#39;irlba&#39; for PCA
+19:20:31 PCA: 1 components explained 28.2% variance
+19:20:31 Scaling init to sdev = 1
+19:20:31 Commencing optimization for 500 epochs, with 86150 positive edges
+19:20:31 Using rng type: pcg
+19:20:34 Optimization finished</code></pre>
+<pre class="r"><code>dataname &lt;- &#39;1kgp&#39;</code></pre>
+<pre class="r"><code>plot_Q(gpqx$Q, pop, loadings_order = loadings_order)</code></pre>
+<p><img src="figure/figure7.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># ggsave(&#39;output/Q.pdf&#39;, width=7, height=3)
+ggsave(here(&#39;output&#39;, &#39;fig&#39;, &#39;fig7&#39;, paste0(dataname, &#39;_Q.pdf&#39;)), width=7, height=3)</code></pre>
+</div>
+<div id="tree-estimation" class="section level2">
+<h2>tree estimation</h2>
+<pre class="r"><code>out_treemix &lt;- estimate_L_from_X_treemix(gpqx$X, gpqx$popsize, 
+                                         m1=FALSE, m2=FALSE)</code></pre>
+<pre><code>Warning in plot_tree(&quot;output/treemix_results/temp_treemix_m0&quot;): NAs introduced
+by coercion
+Warning in plot_tree(&quot;output/treemix_results/temp_treemix_m0&quot;): NAs introduced
+by coercion
+Warning in plot_tree(&quot;output/treemix_results/temp_treemix_m0&quot;): NAs introduced
+by coercion
+Warning in plot_tree(&quot;output/treemix_results/temp_treemix_m0&quot;): NAs introduced
+by coercion</code></pre>
+<pre><code>    V1       V2       V3      V4      V5  V6  V7 V8  V9 V10
+1    0     &lt;NA&gt; NOT_ROOT NOT_MIG NOT_TIP  16   4  1 135   1
+2    1       P4 NOT_ROOT NOT_MIG     TIP   2  NA NA  NA  NA
+3    2     &lt;NA&gt; NOT_ROOT NOT_MIG NOT_TIP  52   3  1   1   1
+4    3       P3 NOT_ROOT NOT_MIG     TIP   2  NA NA  NA  NA
+5    4       P7 NOT_ROOT NOT_MIG     TIP   0  NA NA  NA  NA
+6   15       P8 NOT_ROOT NOT_MIG     TIP  16  NA NA  NA  NA
+7   16     &lt;NA&gt; NOT_ROOT NOT_MIG NOT_TIP  32  15  1   0   2
+8   31 Outgroup NOT_ROOT NOT_MIG     TIP 137  NA NA  NA  NA
+9   32     &lt;NA&gt; NOT_ROOT NOT_MIG NOT_TIP  52  51  1  16   3
+10  51       P5 NOT_ROOT NOT_MIG     TIP  32  NA NA  NA  NA
+11  52     &lt;NA&gt; NOT_ROOT NOT_MIG NOT_TIP  76   2  2  32   4
+12  75       P2 NOT_ROOT NOT_MIG     TIP 104  NA NA  NA  NA
+13  76     &lt;NA&gt; NOT_ROOT NOT_MIG NOT_TIP 137 104  2  52   6
+14 103       P1 NOT_ROOT NOT_MIG     TIP 104  NA NA  NA  NA
+15 104     &lt;NA&gt; NOT_ROOT NOT_MIG NOT_TIP  76  75  1 103   1
+16 135       P6 NOT_ROOT NOT_MIG     TIP   0  NA NA  NA  NA
+17 137     &lt;NA&gt;     ROOT NOT_MIG NOT_TIP 137  31  1  76   8
+                                                                                                                                                                                                                           V11
+1                                                                                                                                                                                      (P7:0.00250589,P6:0.0029146):0.00829827
+2                                                                                                                                                                                                                P4:0.00286784
+3                                                                                                                                                                                     (P3:0.00250586,P4:0.00286784):0.00916757
+4                                                                                                                                                                                                                P3:0.00250586
+5                                                                                                                                                                                                                P7:0.00250589
+6                                                                                                                                                                                                                 P8:0.0204028
+7                                                                                                                                                            (P8:0.0204028,(P7:0.00250589,P6:0.0029146):0.00829827):0.00977689
+8                                                                                                                                                                                                           Outgroup:0.0749888
+9                                                                                                                                  (P5:0.0039247,(P8:0.0204028,(P7:0.00250589,P6:0.0029146):0.00829827):0.00977689):0.00157002
+10                                                                                                                                                                                                                P5:0.0039247
+11                                                                            ((P3:0.00250586,P4:0.00286784):0.00916757,(P5:0.0039247,(P8:0.0204028,(P7:0.00250589,P6:0.0029146):0.00829827):0.00977689):0.00157002):0.0393096
+12                                                                                                                                                                                                               P2:0.00240754
+13                       ((P2:0.00240754,P1:0.00219067):0.00242809,((P3:0.00250586,P4:0.00286784):0.00916757,(P5:0.0039247,(P8:0.0204028,(P7:0.00250589,P6:0.0029146):0.00829827):0.00977689):0.00157002):0.0393096):0.0749888
+14                                                                                                                                                                                                               P1:0.00219067
+15                                                                                                                                                                                    (P2:0.00240754,P1:0.00219067):0.00242809
+16                                                                                                                                                                                                                P6:0.0029146
+17 (Outgroup:0.0749888,((P2:0.00240754,P1:0.00219067):0.00242809,((P3:0.00250586,P4:0.00286784):0.00916757,(P5:0.0039247,(P8:0.0204028,(P7:0.00250589,P6:0.0029146):0.00829827):0.00977689):0.00157002):0.0393096):0.0749888);
+            x          y      ymin      ymax
+1  0.13394358 0.11111111 0.0000000 0.2222222
+2  0.12633381 0.50000000 0.4444444 0.5555556
+3  0.12346597 0.55555556 0.4444444 0.6666667
+4  0.12597183 0.61111111 0.5555556 0.6666667
+5  0.13644947 0.16666667 0.1111111 0.2222222
+6  0.14604811 0.27777778 0.2222222 0.3333333
+7  0.12564531 0.22222222 0.0000000 0.3333333
+8  0.07498880 0.94444444 0.8888889 1.0000000
+9  0.11586842 0.33333333 0.0000000 0.4444444
+10 0.11979312 0.38888889 0.3333333 0.4444444
+11 0.11429840 0.44444444 0.0000000 0.6666667
+12 0.07982443 0.83333333 0.7777778 0.8888889
+13 0.07498880 0.66666667 0.0000000 0.8888889
+14 0.07960756 0.72222222 0.6666667 0.7777778
+15 0.07741689 0.77777778 0.6666667 0.8888889
+16 0.13685818 0.05555556 0.0000000 0.1111111
+17 0.00000000 0.88888889 0.0000000 1.0000000</code></pre>
+<pre><code>Warning in max(e[e[, 5] == &quot;MIG&quot;, 4]): no non-missing arguments to max;
+returning -Inf</code></pre>
+<p><img src="figure/figure7.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] 0.12633381 0.12597183 0.13644947 0.14604811 0.07498880 0.11979312 0.07982443
+[8] 0.07960756 0.13685818
+[1] 0.003
+[1] &quot;mse 7.62992777777778e-05&quot;</code></pre>
+<pre class="r"><code>L.ref &lt;- out_treemix$L_m0[,-1] </code></pre>
+<pre class="r"><code>plot_T(out_treemix, edgelabels_adj = 0.5)</code></pre>
+<p><img src="figure/figure7.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file=here(&#39;output&#39;, &#39;fig&#39;, &#39;fig7&#39;, paste0(dataname, &#39;_T.pdf&#39;)), # &#39;output/T.pdf&#39;, 
+    width=8, height=5)
+plot_T(out_treemix, edgelabels_adj = 0.5)
+dev.off()</code></pre>
+<pre><code>png 
+  2 </code></pre>
+</div>
+<div id="l-m-m2-plots" class="section level2">
+<h2>L, M, M2 plots</h2>
+<pre class="r"><code>figL.tree &lt;- plot_L(L.ref, legend = FALSE)
+
+
+figM.tree &lt;- plot_M(M = gpqx$Q %*% L.ref, 
+                    pop=pop, loadings_order = loadings_order, legend = FALSE)
+
+
+figM2.tree &lt;- plot_M2(L = L.ref,
+                      M = gpqx$Q %*% L.ref,
+                      P = compute_P_from_X(gpqx$X, gpqx$popsize),
+                      G = gpqx$G,
+                      pop = pop,
+                      loadings_order = loadings_order,
+                      legend = TRUE)
+
+
+fig.tree &lt;- grid.arrange(figL.tree, figM.tree, figM2.tree, nrow=1, widths=c(1,2,2.3))</code></pre>
+<p><img src="figure/figure7.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>fig.tree</code></pre>
+<pre><code>TableGrob (1 x 3) &quot;arrange&quot;: 3 grobs
+  z     cells    name           grob
+1 1 (1-1,1-1) arrange gtable[layout]
+2 2 (1-1,2-2) arrange gtable[layout]
+3 3 (1-1,3-3) arrange gtable[layout]</code></pre>
+<pre class="r"><code>ggsave(here(&#39;output/fig&#39;, &#39;fig7&#39;, paste0(dataname, &#39;_LMM2_tree.pdf&#39;)),
+       fig.tree, 
+       width=12, height=3)</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.4.1 (2024-06-14)
+Platform: x86_64-pc-linux-gnu
+Running under: Red Hat Enterprise Linux 8.4 (Ootpa)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.29-el8-x86_64/lib/libopenblas_skylakexp-r0.3.29.so;  LAPACK version 3.12.0
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+time zone: America/Chicago
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] RColorBrewer_1.1-3 fastTopics_0.6-192 pheatmap_1.0.13    gridExtra_2.3     
+ [5] ape_5.8-1          genio_1.1.2        lubridate_1.9.4    forcats_1.0.0     
+ [9] stringr_1.5.1      dplyr_1.1.4        purrr_1.1.0        readr_2.1.5       
+[13] tidyr_1.3.1        tibble_3.3.0       ggplot2_3.5.2      tidyverse_2.0.0   
+[17] here_1.0.1         workflowr_1.7.2   
+
+loaded via a namespace (and not attached):
+ [1] pbapply_1.7-4       rlang_1.1.6         magrittr_2.0.3     
+ [4] git2r_0.36.2        compiler_4.4.1      getPass_0.2-4      
+ [7] systemfonts_1.2.3   callr_3.7.6         vctrs_0.6.5        
+[10] quadprog_1.5-8      pkgconfig_2.0.3     crayon_1.5.3       
+[13] fastmap_1.2.0       labeling_0.4.3      promises_1.3.3     
+[16] rmarkdown_2.30      tzdb_0.5.0          ps_1.9.1           
+[19] ragg_1.4.0          xfun_0.53           cachem_1.1.0       
+[22] jsonlite_2.0.0      progress_1.2.3      later_1.4.4        
+[25] irlba_2.3.5.1       parallel_4.4.1      prettyunits_1.2.0  
+[28] R6_2.6.1            bslib_0.9.0         stringi_1.8.7      
+[31] SQUAREM_2021.1      jquerylib_0.1.4     Rcpp_1.1.0         
+[34] knitr_1.50          R.utils_2.13.0      FNN_1.1.4.1        
+[37] httpuv_1.6.16       Matrix_1.7-3        timechange_0.3.0   
+[40] tidyselect_1.2.1    rstudioapi_0.17.1   yaml_2.3.10        
+[43] processx_3.8.6      lattice_0.22-7      withr_3.0.2        
+[46] evaluate_1.0.5      Rtsne_0.17          RcppParallel_5.1.10
+[49] pillar_1.11.0       whisker_0.4.1       plotly_4.11.0      
+[52] generics_0.1.4      rprojroot_2.1.1     invgamma_1.2       
+[55] truncnorm_1.0-9     hms_1.1.3           scales_1.4.0       
+[58] ashr_2.2-63         kgp_1.1.1           gtools_3.9.5       
+[61] RhpcBLASctl_0.23-42 glue_1.8.0          lazyeval_0.2.2     
+[64] tools_4.4.1         data.table_1.17.8   fs_1.6.6           
+[67] cowplot_1.2.0       grid_4.4.1          nlme_3.1-168       
+[70] cli_3.6.5           textshaping_1.0.1   mixsqp_0.3-54      
+[73] viridisLite_0.4.2   uwot_0.2.3          gtable_0.3.6       
+[76] R.methodsS3_1.8.2   sass_0.4.10         digest_0.6.37      
+[79] ggrepel_0.9.6       htmlwidgets_1.6.4   farver_2.1.2       
+[82] htmltools_0.5.8.1   R.oo_1.27.1         lifecycle_1.0.4    
+[85] httr_1.4.7         </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
